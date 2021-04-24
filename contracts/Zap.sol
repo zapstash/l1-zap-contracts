@@ -154,7 +154,7 @@ contract Zap is ERC721, EIP712, Ownable {
         bytes calldata zapperSignatureData,
         bytes calldata contractOwnerSignatureData
     ) external {
-        SeriesPublication memory publication = SeriesPublication(ipfsHash, msg.sender, seriesTotal);
+        SeriesPublication memory publication = SeriesPublication(ipfsHash, claimedZapper, seriesTotal);
         bytes32 digest = eip712HashZapMintIntent(publication, serialNumber);
         require(digest.recover(zapperSignatureData) == claimedZapper, "Zap: Signature address does not match claimedZapper.");
         require(digest.recover(contractOwnerSignatureData) == owner(), "Zap: Signature address does not match contract owner.");
